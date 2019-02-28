@@ -28,7 +28,7 @@ public class JavaFileOutput implements JavaOutput{
             String fileAbsPath = getAbsPath(path);
             File file = new File(fileAbsPath);
             if(!file.getParentFile().exists()){
-                file.mkdirs();
+                file.getParentFile().mkdirs();
             }
 
             if(!file.exists()){
@@ -49,13 +49,13 @@ public class JavaFileOutput implements JavaOutput{
     private String getAbsPath(String path) {
         String ppath = null;
         if(config.getOutPath() == null || "".equals(config.getOutPath())){
-            ppath = JavaFileOutput.class.getClassLoader().getResource("/").getPath();
+            ppath = JavaFileOutput.class.getClassLoader().getResource("").getPath();
         } else {
             ppath = config.getOutPath();
         }
 
-        if(!ppath.endsWith(File.pathSeparator)){
-            ppath = ppath + File.pathSeparator;
+        if(!ppath.endsWith(File.separator)){
+            ppath = ppath + File.separator;
         }
 
         return ppath + path;

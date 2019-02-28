@@ -32,8 +32,8 @@ public class JavaClassBuilder {
         buildFields(sb);
         buildGetSets(sb);
         buildCLassEnd(sb);
-        String fileName = javaDefinition.getPackageName().replaceAll(".", File.pathSeparator);
-        fileName = fileName + File.pathSeparator + javaDefinition.getName() + ".java";
+        String fileName = javaDefinition.getPackageName().replace('.', File.separatorChar);
+        fileName = fileName + File.separator + javaDefinition.getName() + ".java";
         return new HashMap.SimpleEntry<String, StringBuffer>(fileName, sb);
     }
 

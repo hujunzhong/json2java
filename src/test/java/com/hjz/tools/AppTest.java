@@ -1,7 +1,7 @@
 package com.hjz.tools;
 
 import com.hjz.tools.json2java.App;
-import junit.framework.Test;
+import org.junit.Test;
 
 /**
  * Unit test for simple App.

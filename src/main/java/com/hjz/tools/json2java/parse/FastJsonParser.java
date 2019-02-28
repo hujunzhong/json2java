@@ -14,7 +14,7 @@ import java.util.Set;
  * fastjson实现
  * Created by hujunzhon on 2019/2/28.
  */
-public class FastJsonParser extends  AbstractJsonParser{
+public class FastJsonParser extends AbstractJsonParser {
 
     public FastJsonParser(AppConfig config) {
         super(config);
@@ -26,17 +26,17 @@ public class FastJsonParser extends  AbstractJsonParser{
         parseParent(rootDefinition, jsonObject);
     }
 
-    private void parseParent(JavaDefinition pDefinition, JSONObject jsonObject){
+    private void parseParent(JavaDefinition pDefinition, JSONObject jsonObject) {
         for (String key : jsonObject.keySet()) {
             Object field = jsonObject.get(key);
             JavaDefinition.FieldDefinition fieldDefinition = new JavaDefinition.FieldDefinition();
             String fieldName = formatFieldName(key);
-            if(field instanceof JSONArray){
+            if (field instanceof JSONArray) {
                 fieldName = pluralToSingular(fieldName);
                 fieldDefinition.setArray(true);
                 pDefinition.addImport("java.util.List");
-                JSONArray jsonArray = (JSONArray)field;
-                if(jsonArray.size() == 0){
+                JSONArray jsonArray = (JSONArray) field;
+                if (jsonArray.size() == 0) {
                     field = new Object();
                 } else {
                     field = jsonArray.get(0);
@@ -44,13 +44,13 @@ public class FastJsonParser extends  AbstractJsonParser{
             }
 
             AbstractDefinition type = getFieldType(fieldName, field);
-            if(type.getPackageName() != null && !"".equals(type.getPackageName()) && !pDefinition.getPackageName().equals(type.getPackageName())){
+            if (type.getPackageName() != null && !"".equals(type.getPackageName()) && !pDefinition.getPackageName().equals(type.getPackageName())) {
                 pDefinition.addImport(type.getPackageName() + "." + type.getName());
             }
 
             fieldDefinition.setType(type);
             fieldDefinition.setFieldName(fieldName);
-            if(!key.equals(fieldName)){
+            if (!key.equals(fieldName)) {
                 fieldDefinition.addAnnotation(getJsonFieldAnntotation(key));
                 pDefinition.addImport("com.alibaba.fastjson.annotation.JSONField");
             }
@@ -60,8 +60,8 @@ public class FastJsonParser extends  AbstractJsonParser{
     }
 
     private boolean fieldNameValidate(Set<String> keys) {
-        for (String key : keys){
-            if(!key.matches("^[a-zA-Z].*$")){
+        for (String key : keys) {
+            if (!key.matches("^[a-zA-Z].*$")) {
                 return false;
             }
         }
@@ -69,9 +69,9 @@ public class FastJsonParser extends  AbstractJsonParser{
         return true;
     }
 
-    private AbstractDefinition getFieldType(String fieldName, Object field){
-        if(field instanceof JSONObject){
-            if(fieldNameValidate(((JSONObject)field).keySet())){
+    private AbstractDefinition getFieldType(String fieldName, Object field) {
+        if (field instanceof JSONObject) {
+            if (!fieldNameValidate(((JSONObject) field).keySet())) {
                 //todo:value的类型？
                 return new BaseDefinition("Map", "java.util");
             } else {
@@ -79,35 +79,35 @@ public class FastJsonParser extends  AbstractJsonParser{
                 sDefinition.setName(formatClassNameByField(fieldName));
                 sDefinition.setPackageName(getDftPackage());
                 sDefinition.setNote(buildDftNote());
-                parseParent(sDefinition, (JSONObject)field);
+                parseParent(sDefinition, (JSONObject) field);
                 return sDefinition;
             }
 
-        }  else if(field instanceof String){
+        } else if (field instanceof String) {
             return new BaseDefinition("String", "");
-        } else if(field instanceof Number){
-            if(field instanceof Integer){
+        } else if (field instanceof Number) {
+            if (field instanceof Integer) {
                 return new BaseDefinition("int", "");
-            } else if(field instanceof Long){
+            } else if (field instanceof Long) {
                 return new BaseDefinition("long", "");
-            } else if(field instanceof Float){
+            } else if (field instanceof Float) {
                 return new BaseDefinition("float", "");
-            } else if(field instanceof Short){
+            } else if (field instanceof Short) {
                 return new BaseDefinition("short", "");
-            } else if(field instanceof Boolean){
-                return new BaseDefinition("boolean", "");
             } else {
                 return new BaseDefinition("double", "");
             }
-        } else if(field instanceof Date){
+        } else if (field instanceof Date) {
             return new BaseDefinition("Date", "java.util");
+        } else if (field instanceof Boolean) {
+            return new BaseDefinition("boolean", "");
         } else {
             //不支持的类型，存为object
             return new BaseDefinition("Object", "");
         }
     }
 
-    private String getJsonFieldAnntotation(String paramName){
+    private String getJsonFieldAnntotation(String paramName) {
         return String.format("@JSONField(name = \"%s\")", paramName);
     }
 

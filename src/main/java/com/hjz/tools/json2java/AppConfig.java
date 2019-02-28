@@ -15,7 +15,7 @@ public class AppConfig {
     private File jsonFile;
 
     @Parameter(names={"-o"}, description = "java文件输出", required = false)
-    private String outPath = ".";
+    private String outPath = "";
 
     @Parameter(names={"-p"}, description = "包名" )
     private String packageName ="com.hjz.json.pojo";
