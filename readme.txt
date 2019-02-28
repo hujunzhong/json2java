@@ -1,0 +1,1 @@
+支持用json字符串生成java pojo类，符合javabean规范
