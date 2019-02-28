@@ -74,6 +74,8 @@ public abstract class AbstractJsonParser implements IJsonParser {
     protected String pluralToSingular(String name){
         if(name.endsWith("ies")){
             return name.substring(0, name.length() - 3) + "y";
+        } else if(name.endsWith("ses")){
+            return name.substring(0, name.length() - 2) ;
         } else if(name.endsWith("s")){
             return name.substring(0, name.length() - 1);
         }
