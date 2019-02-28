@@ -37,6 +37,7 @@ public class JavaFileOutput implements JavaOutput{
             }
 
             writeClassToFile(file, javaClassContent.get(path));
+            System.out.println(file.getAbsolutePath());
         }
     }
 
@@ -48,8 +49,8 @@ public class JavaFileOutput implements JavaOutput{
 
     private String getAbsPath(String path) {
         String ppath = null;
-        if(config.getOutPath() == null || "".equals(config.getOutPath())){
-            ppath = JavaFileOutput.class.getClassLoader().getResource("").getPath();
+        if(config.getOutPath() == null){
+            ppath = "";
         } else {
             ppath = config.getOutPath();
         }
