@@ -61,7 +61,7 @@ public class FastJsonParser extends AbstractJsonParser {
 
     private boolean fieldNameValidate(Set<String> keys) {
         for (String key : keys) {
-            if (!key.matches("^[a-zA-Z].*$")) {
+            if (!key.matches("^[a-zA-Z][a-zA-Z0-9_]*$")) {
                 return false;
             }
         }
