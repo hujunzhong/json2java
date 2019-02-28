@@ -10,7 +10,8 @@ public class AppTest
 {
     @Test
     public void test(){
-        String[] args = new String[]{"-i", "C:\\Users\\tiankai.qin\\Desktop\\test.json"};
+        String path = Thread.currentThread().getContextClassLoader().getResource("test.json").getPath();
+        String[] args = new String[]{"-i", path };
         App.main(args);
     }
 }

@@ -1,0 +1,57 @@
+{
+  "from": 0,
+  "size": 10,
+  "timeout": 2500,
+  "Query": {
+    "filtered": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "nested": {
+                "filter": {
+                  "bool": {
+                    "must": [
+                      {
+                        "range": {
+                          "product_info_ref.flightSegment_ref.departureDate": {
+                            "lt": "1548492608685"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "path": "product_info_ref.flightSegment_ref"
+              }
+            },
+            {
+              "nested": {
+                "not": {
+                  "filter": {
+                    "bool": {
+                      "must": {
+                        "term": {
+                          "ext_info_ref.ext_info_name": "royaltyRecords"
+                        }
+                      }
+                    }
+                  }
+                },
+                "path": "ext_info_ref"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "explain": false,
+  "sort": [
+    {
+      "create_time": {
+        "order": "desc"
+      }
+    }
+  ]
+}
