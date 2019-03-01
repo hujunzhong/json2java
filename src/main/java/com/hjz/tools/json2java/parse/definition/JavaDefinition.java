@@ -137,7 +137,7 @@ public class JavaDefinition extends AbstractDefinition{
         }
 
         public void setArray(boolean array) {
-            array = array;
+            this.array = array;
         }
     }
 }

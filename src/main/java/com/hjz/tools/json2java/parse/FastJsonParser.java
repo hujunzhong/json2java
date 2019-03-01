@@ -8,6 +8,7 @@ import com.hjz.tools.json2java.parse.definition.BaseDefinition;
 import com.hjz.tools.json2java.parse.definition.JavaDefinition;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,11 +32,17 @@ public class FastJsonParser extends AbstractJsonParser {
             Object field = jsonObject.get(key);
             JavaDefinition.FieldDefinition fieldDefinition = new JavaDefinition.FieldDefinition();
             String fieldName = formatFieldName(key);
-            if (field instanceof JSONArray) {
+            fieldDefinition.setFieldName(fieldName);
+            if (!key.equals(fieldName)) {
+                fieldDefinition.addAnnotation(getJsonFieldAnntotation(key));
+                pDefinition.addImport("com.alibaba.fastjson.annotation.JSONField");
+            }
+
+            if (field instanceof List) {
                 fieldName = pluralToSingular(fieldName);
                 fieldDefinition.setArray(true);
                 pDefinition.addImport("java.util.List");
-                JSONArray jsonArray = (JSONArray) field;
+                List jsonArray = (List) field;
                 if (jsonArray.size() == 0) {
                     field = new Object();
                 } else {
@@ -49,12 +56,6 @@ public class FastJsonParser extends AbstractJsonParser {
             }
 
             fieldDefinition.setType(type);
-            fieldDefinition.setFieldName(fieldName);
-            if (!key.equals(fieldName)) {
-                fieldDefinition.addAnnotation(getJsonFieldAnntotation(key));
-                pDefinition.addImport("com.alibaba.fastjson.annotation.JSONField");
-            }
-
             pDefinition.addField(fieldDefinition);
         }
     }
