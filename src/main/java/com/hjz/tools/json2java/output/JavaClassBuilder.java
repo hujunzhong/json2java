@@ -112,7 +112,7 @@ public class JavaClassBuilder {
 
     private void buildPackage(StringBuffer sb) {
         sb.append("package ");
-        sb.append(javaDefinition.getPackageName()).append(LINE_END);
+        sb.append(javaDefinition.getPackageName()).append(";").append(LINE_END);
     }
 
 }
