@@ -67,6 +67,9 @@ public class JavaFileOutput implements JavaOutput{
         Map.Entry<String, StringBuffer> entry = builder.buildJavaClass();
         javaClassContent.put(entry.getKey(), entry.getValue());
         Map<String, JavaDefinition.FieldDefinition> fields = javaDefinition.getFieldMap();
+        if(fields == null){
+            return;
+        }
         for (JavaDefinition.FieldDefinition definition : fields.values()){
             AbstractDefinition fieldType = definition.getType();
             if(fieldType instanceof  JavaDefinition){

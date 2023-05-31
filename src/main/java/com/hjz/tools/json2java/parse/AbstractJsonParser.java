@@ -78,6 +78,8 @@ public abstract class AbstractJsonParser implements IJsonParser {
             return name.substring(0, name.length() - 2) ;
         } else if(name.endsWith("s")){
             return name.substring(0, name.length() - 1);
+        } else if(name.endsWith("List") || name.endsWith("list")){
+            return name.substring(0, name.length() - 4);
         }
 
         return name;
