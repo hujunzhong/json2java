@@ -63,7 +63,7 @@ public abstract class AbstractJsonParser implements IJsonParser {
      * @return
      */
     protected String formatClassNameByField(String fieldName){
-        return fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+        return config.getPrefix() + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
     }
 
     /**

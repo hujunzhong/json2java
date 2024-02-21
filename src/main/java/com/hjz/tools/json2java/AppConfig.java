@@ -23,8 +23,23 @@ public class AppConfig {
     @Parameter(names={"-c"}, description = "根类名" )
     private String rootClass = "root";
 
+    @Parameter(names={"-f"}, description = "前缀" )
+    private String prefix = "";
+    
+
     private String frame = "fastjson";
 
+    public String getPrefix() {
+        if(prefix == null){
+            return "";
+        }
+
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
     public File getJsonFile() {
         return jsonFile;
