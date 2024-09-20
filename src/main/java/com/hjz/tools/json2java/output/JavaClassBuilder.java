@@ -71,6 +71,10 @@ public class JavaClassBuilder {
     private void buildFields(StringBuffer sb) {
         if(javaDefinition.getFieldMap() != null){
             for (JavaDefinition.FieldDefinition field : javaDefinition.getFieldMap().values()){
+                if(field.getNote() != null){
+                    sb.append("    /**  ").append(field.getNote()).append("  **/").append(LINE_END);
+                }
+
                 if(field.getAnnotations() != null){
                     for(String ann : field.getAnnotations()){
                         sb.append("    ").append(ann).append(LINE_END);

@@ -55,6 +55,10 @@ public class FastJsonParser extends AbstractJsonParser {
                 pDefinition.addImport(type.getPackageName() + "." + type.getName());
             }
 
+            if(type instanceof BaseDefinition){
+                fieldDefinition.setNote("eg: " + String.valueOf(field));
+            }
+
             fieldDefinition.setType(type);
             pDefinition.addField(fieldDefinition);
         }
